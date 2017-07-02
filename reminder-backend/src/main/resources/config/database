@@ -1,0 +1,2 @@
+jpaVendor.show_sql=true
+jpaVendor.ddl.auto=true

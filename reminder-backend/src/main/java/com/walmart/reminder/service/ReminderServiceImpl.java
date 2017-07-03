@@ -12,11 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityNotFoundException;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by HiepNguyen on 7/2/2017.
@@ -24,6 +21,8 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 public class ReminderServiceImpl implements ReminderService {
+
+    private static final String ENTITY_NOT_FOUND_EXP = "Can't find out entity having id %s";
 
     @Inject
     private ReminderRepository reminderRepository;
@@ -35,25 +34,22 @@ public class ReminderServiceImpl implements ReminderService {
     private ReminderConverter reminderConverter;
 
     @Override
-    public List<ReminderDto> getReminders() {
-        List<ReminderEntity> entities = reminderRepository.findAll();
-        List<ReminderDto> dtos = new ArrayList<>();
-        entities.forEach(e -> dtos.add(reminderConverter.toDto(e)));
-        return dtos;
+    public List<ReminderDto> getReminders(List<StatusEnum> status, Date sDate, Date eDate) {
+        List<StatusEntity> statusEntities = getStatusEntity_v2(status);
+        List<ReminderEntity> entities = reminderRepository.filterByStatusAndDueDate(statusEntities, sDate, eDate);
+        return entities.stream().map(entity -> reminderConverter.toDto(entity)).collect(Collectors.toList());
     }
 
     @Override
     public ReminderDto getReminderById(Long id) {
-        return reminderConverter.toDto(reminderRepository.findOne(id));
+        ReminderEntity entity = getReminderEntityById(id);
+        return reminderConverter.toDto(entity);
     }
 
     @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void updateReminder(ReminderDto reminderDto) {
-        ReminderEntity entity = reminderRepository.findOne(reminderDto.getId());
-        if (entity == null) {
-            throw new EntityNotFoundException();
-        }
+        ReminderEntity entity = getReminderEntityById(reminderDto.getId());
         reminderConverter.copyProperties(reminderDto, entity);
         setupStatus(reminderDto, entity);
 
@@ -75,5 +71,26 @@ public class ReminderServiceImpl implements ReminderService {
             Optional<StatusEntity> statusOpt = statusRepository.getByCode(reminderDto.getStatus().name());
             entity.setStatus(statusOpt.orElseThrow(EntityNotFoundException::new));
         });
+    }
+
+    /**
+     * I prefer to use the method but H2SQL translates <code>IN</code> to '=' condition which can't pull correct data
+     * <code>select statusenti0_.id as id1_1_, statusenti0_.code as code2_1_ from REMINDER_STATUS statusenti0_ where statusenti0_.code=(? , ?)</code>
+     * Work around by getStatusEntity_v2
+     */
+    private List<StatusEntity> getStatusEntity(List<StatusEnum> status) {
+        return statusRepository.getAllByCode(status.stream().map(StatusEnum::name).collect(Collectors.toList()));
+    }
+
+    private List<StatusEntity> getStatusEntity_v2(List<StatusEnum> status) {
+        return status.stream().map(StatusEnum::name).map(statusRepository::getByCode).filter(entityOpt -> entityOpt.isPresent()).map(entityOpt -> entityOpt.get()).collect(Collectors.toList());
+    }
+
+    private ReminderEntity getReminderEntityById(Long id) {
+        ReminderEntity entity = reminderRepository.findOne(id);
+        if (entity == null) {
+            throw new EntityNotFoundException(String.format(ENTITY_NOT_FOUND_EXP, id));
+        }
+        return entity;
     }
 }

@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.util.Properties;
 
 /**
  * Created by HiepNguyen on 7/2/2017.
@@ -26,15 +25,15 @@ import java.util.Properties;
 @Configuration
 @ComponentScan
 @EnableTransactionManagement
-@EnableJpaRepositories("com.walmart.reminder.dao")
-//@PropertySource(value = "classpath:database.properties", ignoreResourceNotFound = true)
+@EnableJpaRepositories
+@PropertySource(value = "classpath:/config/database.properties", ignoreResourceNotFound = true)
 public class DatabaseConfig {
 
-//    @Value("${jpaVendor.show_sql}")
-    private boolean SHOW_SQL;
+    //    @Value("${jpaVendor.show_sql}")
+    private String SHOW_SQL = "TRUE";
 
-//    @Value("${jpaVendor.ddl.auto}")
-    private boolean DDL_AUTO;
+    //    @Value("${jpaVendor.ddl.auto}")
+    private String DDL_AUTO = "TRUE";
 
     @Bean
     public DataSource dataSource() {
@@ -55,8 +54,8 @@ public class DatabaseConfig {
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setDatabase(Database.H2);
-        jpaVendorAdapter.setShowSql(SHOW_SQL);
-        jpaVendorAdapter.setGenerateDdl(DDL_AUTO);
+        jpaVendorAdapter.setShowSql(Boolean.valueOf(SHOW_SQL));
+        jpaVendorAdapter.setGenerateDdl(Boolean.valueOf(DDL_AUTO));
         return jpaVendorAdapter;
     }
 
@@ -68,4 +67,5 @@ public class DatabaseConfig {
         lemfb.setPackagesToScan("com.walmart.reminder.entity");
         return lemfb;
     }
+
 }

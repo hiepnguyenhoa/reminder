@@ -1,8 +1,11 @@
 package com.walmart.reminder.service;
 
 import com.walmart.reminder.dto.ReminderDto;
+import com.walmart.reminder.dto.StatusEnum;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -10,7 +13,8 @@ import java.util.List;
  */
 public interface ReminderService {
 
-    List<ReminderDto> getReminders();
+    //    List<ReminderDto> getReminders(EnumSet<StatusEnum> status, Date sDate, Date eDate);
+    List<ReminderDto> getReminders(List<StatusEnum> status, Date sDate, Date eDate);
 
     ReminderDto getReminderById(@NotNull Long id);
 

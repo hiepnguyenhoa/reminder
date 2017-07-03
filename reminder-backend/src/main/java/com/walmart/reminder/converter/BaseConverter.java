@@ -11,7 +11,9 @@ import java.util.stream.Stream;
 /**
  * Created by HiepNguyen on 7/2/2017.
  */
-public interface BaseConverter<DTO, ENTITY extends BaseEntity> {
+public interface BaseConverter<DTO, ENTITY> {
+
+    String CONVERT_EXP = "Can't convert a null object";
 
     DTO toDto(ENTITY entity);
 
@@ -19,7 +21,7 @@ public interface BaseConverter<DTO, ENTITY extends BaseEntity> {
 
     default void validateInput(Object objcet) {
         if (objcet == null)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(CONVERT_EXP);
     }
 
     default <E> E copyProperties(Object source, E target) {

@@ -4,6 +4,7 @@ import com.walmart.reminder.converter.DateConverter;
 import com.walmart.reminder.dto.ReminderDto;
 import com.walmart.reminder.dto.StatusEnum;
 import com.walmart.reminder.service.ReminderService;
+import com.walmart.reminder.utils.ValidateUtils;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -44,17 +45,22 @@ public class ReminderRestImpl implements ReminderRest {
 
     @Override
     public Response getReminderById(Long reminderId) {
+        ValidateUtils.validateNotNull(reminderId);
         return Response.ok(reminderService.getReminderById(reminderId)).build();
     }
 
     @Override
     public Response updateReminder(ReminderDto reminder) {
+        ValidateUtils.validateNotNull(reminder);
+        ValidateUtils.validateNotNull(reminder.getId());
         reminderService.updateReminder(reminder);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @Override
     public Response postReminder(ReminderDto reminder) {
+        ValidateUtils.validateNotNull(reminder);
+        ValidateUtils.validateNull(reminder.getId());
         return Response.ok(reminderService.addReminder(reminder)).build();
     }
 

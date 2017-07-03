@@ -43,7 +43,7 @@ public class ReminderServiceImplTest {
      * However due to version 1.9.x doesn't support default method in Java 8, change to use as a mock object.
      * Converter must have is own tests.
      */
-    //TODO: change to use Spy when Mokito version 2.0 stable.
+    //TODO: change to use Spy when Mockito version 2.0 is stable.
     @Mock
     private ReminderConverter reminderConverter;
 
@@ -140,8 +140,6 @@ public class ReminderServiceImplTest {
 
         ReminderDto reminderDto = new ReminderDto();
         reminderService.addReminder(reminderDto);
-        verify(reminderRepository, never()).findOne(anyLong());
-        verify(reminderRepository, times(1)).save(any(ReminderEntity.class));
     }
 
     @Test(expected = RuntimeException.class)
@@ -150,10 +148,6 @@ public class ReminderServiceImplTest {
 
         ReminderDto reminderDto = new ReminderDto();
         reminderService.addReminder(reminderDto);
-        verify(reminderRepository, never()).findOne(anyLong());
-        verify(reminderRepository, never()).findOne(anyLong());
-        verify(reminderRepository, never()).findOne(anyLong());
-        verify(reminderRepository, times(1)).save(any(ReminderEntity.class));
     }
 
     private List<ReminderEntity> reminderEntities(int size) {

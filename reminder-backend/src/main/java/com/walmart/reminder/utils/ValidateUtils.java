@@ -1,10 +1,11 @@
 package com.walmart.reminder.utils;
 
 import com.walmart.reminder.exception.EmptyException;
+import com.walmart.reminder.exception.NotNullException;
 import com.walmart.reminder.exception.NullObjectException;
+import org.hibernate.criterion.NotNullExpression;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by HiepNguyen on 7/3/2017.
@@ -14,6 +15,13 @@ public class ValidateUtils {
     public static boolean validateNotNull(Object o){
         if(o==null){
             throw new NullObjectException();
+        }
+        return true;
+    }
+
+    public static boolean validateNull(Object o){
+        if(o!=null){
+            throw new NotNullException(o.toString());
         }
         return true;
     }

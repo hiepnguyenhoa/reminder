@@ -20,7 +20,7 @@ public class ReminderConverter implements BaseConverter<ReminderDto, ReminderEnt
         validateInput(entity);
         ReminderDto dto = new ReminderDto();
         this.copyProperties(entity, dto);
-        //TODO: add status conversion
+        dto.setStatus(statusConverter.toDto(entity.getStatus()));
         return dto;
     }
 
@@ -28,7 +28,7 @@ public class ReminderConverter implements BaseConverter<ReminderDto, ReminderEnt
     public ReminderEntity toEntity(ReminderDto reminderDto) {
         validateInput(reminderDto);
         ReminderEntity entity = new ReminderEntity();
-        //TODO: add status conversion
-        return this.copyProperties(reminderDto, entity);
+        this.copyProperties(reminderDto, entity);
+        return entity;
     }
 }

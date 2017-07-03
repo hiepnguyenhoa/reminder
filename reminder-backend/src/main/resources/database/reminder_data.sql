@@ -1,2 +1,2 @@
-INSERT INTO REMINDER (remindContent, dueDate, status_id, createdOn) VALUES ('This is the first remind content', '2017-07-01', 1, '2017-07-01 18:47:52.69');
-INSERT INTO REMINDER (remindContent, dueDate, status_id, createdOn) VALUES ('This is the second remind content', '2017-07-01', 2, '2017-07-01 18:47:52.69');
+INSERT INTO REMINDER (remindContent, dueDate, status_id) VALUES ('This is the first remind content', '2017-07-01', 1);
+INSERT INTO REMINDER (remindContent, dueDate, status_id) VALUES ('This is the second remind content', '2017-07-01', 2);

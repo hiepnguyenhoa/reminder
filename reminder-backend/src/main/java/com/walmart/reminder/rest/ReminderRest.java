@@ -20,8 +20,7 @@ public interface ReminderRest {
     Response getReminderById(@PathParam("id") Long reminderId);
 
     @PUT
-    @Path("{id}")
-    Response updateReminder(@PathParam("id") Long id,  ReminderDto reminder);
+    Response updateReminder(ReminderDto reminder);
 
     @POST
     Response postReminder(ReminderDto reminder);

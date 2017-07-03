@@ -21,7 +21,7 @@ public class StatusConverter implements BaseConverter<StatusEnum, StatusEntity> 
     public StatusEntity toEntity(StatusEnum statusEnum) {
         validateInput(statusEnum);
         StatusEntity entity = new StatusEntity();
-        entity.setCode(statusEnum.getCode());
+        entity.setCode(statusEnum.name());
         return entity;
     }
 }

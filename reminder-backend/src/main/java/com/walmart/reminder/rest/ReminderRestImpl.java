@@ -1,6 +1,8 @@
 package com.walmart.reminder.rest;
 
+import com.walmart.reminder.dao.StatusRepository;
 import com.walmart.reminder.dto.ReminderDto;
+import com.walmart.reminder.entity.StatusEntity;
 import com.walmart.reminder.service.ReminderService;
 
 import javax.inject.Inject;
@@ -33,7 +35,8 @@ public class ReminderRestImpl implements ReminderRest{
     }
 
     @Override
-    public Response updateReminder(Long id, ReminderDto reminder) {
+    public Response updateReminder(ReminderDto reminder) {
+        reminderService.updateReminder(reminder);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 

@@ -1,8 +1,6 @@
 package com.walmart.reminder.dto;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Created by HiepNguyen on 7/2/2017.
@@ -11,7 +9,7 @@ public class ReminderDto extends BaseDto {
 
     private String remindContent;
 
-    private LocalDate dueDate;
+    private Date dueDate;
 
     private StatusEnum status;
 
@@ -23,11 +21,11 @@ public class ReminderDto extends BaseDto {
         this.remindContent = remindContent;
     }
 
-    public LocalDate getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 

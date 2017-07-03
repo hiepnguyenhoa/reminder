@@ -9,19 +9,13 @@ import java.util.Date;
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public class BaseEntity implements Serializable{
+public class BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = -5253115899312219411L;
+    public static final long serialVersionUID = -5253115899312219411L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdOn = new Date();
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedOn;
 
     public Long getId() {
         return id;
@@ -31,19 +25,4 @@ public class BaseEntity implements Serializable{
         this.id = id;
     }
 
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
 }

@@ -7,6 +7,7 @@ import com.walmart.reminder.dto.ReminderDto;
 import com.walmart.reminder.dto.StatusEnum;
 import com.walmart.reminder.entity.ReminderEntity;
 import com.walmart.reminder.entity.StatusEntity;
+import com.walmart.reminder.utils.ValidateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +36,9 @@ public class ReminderServiceImpl implements ReminderService {
 
     @Override
     public List<ReminderDto> getReminders(List<StatusEnum> status, Date sDate, Date eDate) {
+        ValidateUtils.validateNotEmpty(status);
+        ValidateUtils.validateNotNull(sDate);
+        ValidateUtils.validateNotNull(eDate);
         List<StatusEntity> statusEntities = getStatusEntity_v2(status);
         List<ReminderEntity> entities = reminderRepository.filterByStatusAndDueDate(statusEntities, sDate, eDate);
         return entities.stream().map(entity -> reminderConverter.toDto(entity)).collect(Collectors.toList());
@@ -42,6 +46,7 @@ public class ReminderServiceImpl implements ReminderService {
 
     @Override
     public ReminderDto getReminderById(Long id) {
+        ValidateUtils.validateNotNull(id);
         ReminderEntity entity = getReminderEntityById(id);
         return reminderConverter.toDto(entity);
     }
@@ -49,6 +54,7 @@ public class ReminderServiceImpl implements ReminderService {
     @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void updateReminder(ReminderDto reminderDto) {
+        ValidateUtils.validateNotNull(reminderDto);
         ReminderEntity entity = getReminderEntityById(reminderDto.getId());
         reminderConverter.copyProperties(reminderDto, entity);
         setupStatus(reminderDto, entity);
@@ -59,9 +65,10 @@ public class ReminderServiceImpl implements ReminderService {
     @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public ReminderDto addReminder(ReminderDto reminderDto) {
+        ValidateUtils.validateNotNull(reminderDto);
         ReminderEntity entity = reminderConverter.toEntity(reminderDto);
         setupStatus(reminderDto, entity);
-        reminderRepository.save(entity);
+        entity = reminderRepository.save(entity);
         reminderDto.setId(entity.getId());
         return reminderDto;
     }

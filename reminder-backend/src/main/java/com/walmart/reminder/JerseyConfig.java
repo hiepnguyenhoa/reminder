@@ -11,9 +11,9 @@ import javax.ws.rs.ApplicationPath;
  */
 
 @ApplicationPath("/rest")
-public class AppConfig  extends ResourceConfig {
+public class JerseyConfig extends ResourceConfig {
 
-    public AppConfig(){
+    public JerseyConfig(){
         packages("com.walmart.reminder");
     }
 }

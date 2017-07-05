@@ -28,3 +28,7 @@ nbdist/
 
 
 /reminder-fontend/nbproject/private/
+*.jar
+reminder-web/mvnw
+reminder-web/mvnw.cmd
+reminder-web/.mvn/

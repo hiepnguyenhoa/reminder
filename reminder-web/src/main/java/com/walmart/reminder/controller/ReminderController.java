@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.walmart.reminder.reminder.controller;
+package com.walmart.reminder.controller;
 
 import com.walmart.reminder.model.ReminderModel;
 

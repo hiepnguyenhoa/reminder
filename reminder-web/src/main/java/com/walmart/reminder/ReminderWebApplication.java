@@ -1,4 +1,4 @@
-package com.walmart.reminder.reminder;
+package com.walmart.reminder;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

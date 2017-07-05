@@ -2,16 +2,17 @@ package com.walmart.reminder.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
  * Created by HiepNguyen on 7/2/2017.
  */
+@XmlRootElement
 public class ReminderDto extends BaseDto {
 
     private String remindContent;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date dueDate;
 
     private StatusEnum status;

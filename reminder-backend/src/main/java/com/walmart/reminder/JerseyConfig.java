@@ -1,8 +1,7 @@
 package com.walmart.reminder;
 
+import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.ServerProperties;
-import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
 
 import javax.ws.rs.ApplicationPath;
 
@@ -14,6 +13,8 @@ import javax.ws.rs.ApplicationPath;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig(){
+        register(JacksonFeatures.class);
+        register(MarshallingFeature.class);
         packages("com.walmart.reminder");
     }
 }

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Arrays;
@@ -40,7 +41,9 @@ public class ReminderRestImpl implements ReminderRest {
         Date startDate = sDate == null ? MIN_DATE : dateConverter.toDate(sDate);
         Date endDate = eDate == null ? MAX_DATE : dateConverter.toDate(eDate);
         List<StatusEnum> statusEnums = status == null || status.size() == 0 ? STATUS : status;
-        return Response.ok(reminderService.getReminders(statusEnums, startDate, endDate)).build();
+        List<ReminderDto> list = reminderService.getReminders(statusEnums, startDate, endDate);
+        GenericEntity entity = new GenericEntity<List<ReminderDto>>(list){};
+        return Response.ok(entity).build();
     }
 
     @Override

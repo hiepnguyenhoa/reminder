@@ -27,3 +27,4 @@ nbdist/
 .nb-gradle/
 
 
+/reminder-fontend/nbproject/private/

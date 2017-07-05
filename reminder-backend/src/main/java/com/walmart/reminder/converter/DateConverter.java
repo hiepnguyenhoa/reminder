@@ -14,7 +14,7 @@ import java.util.Date;
 @Service
 public class DateConverter implements BaseConverter<String, Date> {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
 
     @Override
     @Deprecated

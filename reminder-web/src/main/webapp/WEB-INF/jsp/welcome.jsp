@@ -57,7 +57,7 @@
                         Enjoy and Thank you!
                     </div>
                     <div class="row s12" style="padding-top: 10px;">
-                        If those functionalities works incorrectly, you have to make sure that the backend server runs at <b>localhost:9090</b> 
+                        If those functionalities works incorrectly, you have to make sure that the backend server runs at <b>localhost:8080</b>
                     </div>
                 </div>
                 <div class="col s2 m1"></div>

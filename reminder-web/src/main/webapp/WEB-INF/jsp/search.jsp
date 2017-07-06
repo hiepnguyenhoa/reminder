@@ -93,7 +93,7 @@
                                             ${reminder.remindContent}
                                             <p><fmt:formatDate pattern = "MM-dd-yyyy"   value = "${reminder.dueDate}" />
                                             <div class="card-action">
-                                                <a href="update/1">Update</a>
+                                                <a href="update/${reminder.id}">Update</a>
                                             </div>
                                         </div>
                                     </div>

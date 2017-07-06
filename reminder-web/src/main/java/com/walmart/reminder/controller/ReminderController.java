@@ -32,7 +32,7 @@ public class ReminderController {
 
       private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
 
-      private static final String REMINDER_BASE = "http://localhost:9090/rest";
+      private static final String REMINDER_BASE = "http://localhost:8080/rest";
       private static final String REMINDER_REST = "reminders";
 
       private static final String WELCOME_PAGE = "welcome";

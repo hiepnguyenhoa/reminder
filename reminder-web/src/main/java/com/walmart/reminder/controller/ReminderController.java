@@ -36,11 +36,14 @@ public class ReminderController {
       private static final String REMINDER_REST = "reminders";
 
       private static final String WELCOME_PAGE = "welcome";
-      private static final String ERROR_PAGE = "redirect:.error";
+      private static final String ERROR_PAGE = "redirect:error";
       private static final String INDEX_PAGE = "index";
       private static final String INDEX_REDIRECT_PAGE = "redirect:list";
       private static final String SEARCH_PAGE = "search";
       private static final String DETAILS_PAGE = "details";
+      private static final String UPDATE_PAGE = "update";
+      private static final String REMINDER_KEY = "reminder";
+      private static final String MESSAGE_KEY = "message";
 
       @RequestMapping("/")
       public String root() {
@@ -71,27 +74,58 @@ public class ReminderController {
       }
 
       @RequestMapping("/add")
-      public String addReminder(ReminderModel model) {
+      public ModelAndView addReminder(ReminderModel model) {
+            ModelAndView modelAndView = new ModelAndView(INDEX_REDIRECT_PAGE);
             WebClient client = getWebClient();
-            Response response = client.post(Entity.json(model));
-            if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-                  return ERROR_PAGE;
+            Response response = null;
+            try {
+                  response = client.post(Entity.json(model));
+            } catch (Exception exp) {
+                  modelAndView.setViewName(ERROR_PAGE);
+                  modelAndView.addObject(MESSAGE_KEY, "Can't connect to backed service");
             }
-            return INDEX_REDIRECT_PAGE;
+            if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+                  modelAndView.setViewName(ERROR_PAGE);
+                  modelAndView.addObject(MESSAGE_KEY, "Can't add new reminder");
+            }
+            return modelAndView;
       }
 
-      @RequestMapping("/get/{id}")
-      public String getReminder(@PathVariable("id") Long id) {
-
-            WebClient client = getWebClient().path("{id}", 1);
-            Response response = client.get();
-            if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-                  return ERROR_PAGE;
+      @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+      public ModelAndView updateGet(@PathVariable("id") Long id, ModelAndView modelAndView) {
+            modelAndView.setViewName(UPDATE_PAGE);
+            Response response = null;
+            try {
+                  response = getWebClient().path("{id}", id).get();
+            } catch (Exception exp) {
+                  modelAndView.setViewName(ERROR_PAGE);
+                  modelAndView.addObject(MESSAGE_KEY, "Can't connect to backed service");
+            }
+            if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+                  modelAndView.addObject(REMINDER_KEY, response.readEntity(ReminderModel.class));
+            } else {
+                  modelAndView.addObject(MESSAGE_KEY, String.format("Can't find out Reminder has id %s", id));
             }
 
-            final ReminderModel products = response.readEntity(ReminderModel.class);
+            return modelAndView;
+      }
 
-            return INDEX_PAGE;
+      @RequestMapping(value = "/update", method = RequestMethod.POST)
+      public ModelAndView updatePost(ReminderModel reminder) {
+            ModelAndView modelAndView = new ModelAndView(INDEX_REDIRECT_PAGE);
+            WebClient client = getWebClient();
+            Response response = null;
+            try {
+                  response = client.put(Entity.json(reminder));
+            } catch (Exception exp) {
+                  modelAndView.setViewName(ERROR_PAGE);
+                  modelAndView.addObject(MESSAGE_KEY, "Can't connect to backed service");
+            }
+            if (response.getStatus() != Response.Status.NO_CONTENT.getStatusCode()) {
+                  modelAndView.setViewName(ERROR_PAGE);
+                  modelAndView.addObject(MESSAGE_KEY, "Can't add new reminder");
+            }
+            return modelAndView;
       }
 
       @RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -99,7 +133,7 @@ public class ReminderController {
             return SEARCH_PAGE;
       }
 
-      @RequestMapping(value = "/searchPost")
+      @RequestMapping(value = "/search", method = RequestMethod.POST)
       public ModelAndView searchProcessing(String start, String end, String[] status) {
             ModelAndView modelAndView = new ModelAndView(SEARCH_PAGE);
             Response response = null;

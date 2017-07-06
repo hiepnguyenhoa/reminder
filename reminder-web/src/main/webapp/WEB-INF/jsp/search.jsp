@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@
         <title>Welcome to Reminder project</title>
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
-
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
 
@@ -37,7 +38,7 @@
     <body>
         <div id="container">
             <nav>
-                <div class="nav-wrapper">
+                <div class="nav-wrapper" style="padding: 0 20px;">
                     <a href="./" class="brand-logo">Reminder App</a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="list">List of reminders</a></li>
@@ -50,7 +51,7 @@
                 <div class="col s2"></div>
                 <div class="col s8">
                     <div class="card blue-grey darken-1">
-                        <form id="search" action="searchPost" type="POST">
+                        <form id="search" action="search" method="POST">
                             <div class="row col s12">
                                 <div class="input-field col s3" style="padding-top:25px;">
                                     <input placeholder="Start date" type="text" id="datepicker1" name="start" class="validate"/>
@@ -87,11 +88,11 @@
                                 <div class="col s4 m4">
                                     <div class="card">
                                         <div class="card-content">
+                                            <c:if test="${reminder.status eq 'DONE'}"> <i class="material-icons small">done</i> </c:if>
+                                            <c:if test="${reminder.status eq 'NOT_DONE'}"> <i class="material-icons small">new_releases</i> </c:if>
                                             ${reminder.remindContent}
-                                            ${reminder.dueDate}
-                                            ${reminder.status}
+                                            <p><fmt:formatDate pattern = "MM-dd-yyyy"   value = "${reminder.dueDate}" />
                                             <div class="card-action">
-                                                <a href="get/1">Details</a>
                                                 <a href="update/1">Update</a>
                                             </div>
                                         </div>

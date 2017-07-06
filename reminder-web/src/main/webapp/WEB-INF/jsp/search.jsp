@@ -26,7 +26,8 @@
         <script>
 
             $(function () {
-                $("#datepicker").datepicker();
+                $("#datepicker1").datepicker();
+                $("#datepicker2").datepicker();
             });
 
         </script>
@@ -49,26 +50,26 @@
                 <div class="col s2"></div>
                 <div class="col s8">
                     <div class="card blue-grey darken-1">
-                        <form id="addReminder" action="./add" class="row s12" type="POST">
-                            <div class="input-field col s12">
-                                <div class="col s6" style="padding-top:40px;">
-                                    <input placeholder="Content" name="remindContent" type="text" class="validate">
+                        <form id="search" action="searchPost" type="POST">
+                            <div class="row col s12">
+                                <div class="input-field col s3" style="padding-top:25px;">
+                                    <input placeholder="Start date" type="text" id="datepicker1" name="start" class="validate"/>
                                 </div>
-                                <div class="input-field col s2" style="padding-top:25px;">
-                                    <input placeholder="Due Date" type="text" id="datepicker" name="dueDate" class="validate"/>
+                                <div class="input-field col s3" style="padding-top:25px;">
+                                    <input placeholder="End date" type="text" id="datepicker2" name="end" class="validate"/>
                                 </div>
-                                <div class="col s2">
-                                    <div class="row">
-                                        <input name="status" type="radio" id="test1" value="DONE"/>
-                                        <label for="test1">DONE</label>
+                                <div class="input-field col s2">
+                                    <div class="row s12">
+                                        <input type="checkbox" id="check1" name="status" value="DONE" />
+                                        <label for="check1">Done</label>
                                     </div>
-                                    <div class="row">
-                                        <input name="status" type="radio" id="test2" value="NOT_DONE"/>
-                                        <label for="test2">NOT DONE</label>
+                                    <div class="row s12">
+                                        <input type="checkbox" id="check2" name="status" value="NOT_DONE" />
+                                        <label for="check2">Not Done</label>
                                     </div>
                                 </div>
-                                <div class="col s2" style="padding-top:20px;">
-                                    <a href="javascript:{}" onclick="document.getElementById('addReminder').submit();" class="waves-effect waves-light btn-large">Add</a>
+                                <div class="col s2" style="padding-top:25px">
+                                    <a href="javascript:{}" onclick="document.getElementById('search').submit();" class="waves-effect waves-light btn-large">Search</a>
                                 </div>
                             </div>
                         </form>

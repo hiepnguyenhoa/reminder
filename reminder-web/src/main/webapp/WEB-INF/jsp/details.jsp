@@ -37,10 +37,10 @@
         <div id="container">
             <nav>
                 <div class="nav-wrapper">
-                    <a href="./" class="brand-logo">Reminder App</a>
+                    <a href="/reminder-web/" class="brand-logo">Reminder App</a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="list">List of reminders</a></li>
-                        <li><a href="search">Search</a></li>
+                        <li><a href="/reminder-web/list">List of reminders</a></li>
+                        <li><a href="/reminder-web/search">Search</a></li>
                     </ul>
                 </div>
             </nav>
@@ -77,31 +77,6 @@
                 <div class="col s2"></div>
             </div>
 
-            <div class="row s12">
-                <div class="col s2"></div>
-                <div class="col s8">
-                    <div class="panel s12">
-                        <c:if test="${not empty reminderModels}">
-                            <c:forEach var="reminder" items="${reminderModels}">
-                                <div class="col s4 m4">
-                                    <div class="card">
-                                        <div class="card-content">
-                                            ${reminder.remindContent}
-                                            ${reminder.dueDate}
-                                            ${reminder.status}
-                                            <div class="card-action">
-                                                <a href="get/1">Details</a>
-                                                <a href="update/1">Update</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </c:if>
-                    </div>
-                </div>
-                <div class="col s2"></div>
-            </div>
         </div>
     </body>
 </html>
